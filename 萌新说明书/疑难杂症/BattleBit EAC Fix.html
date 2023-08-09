@@ -1,0 +1,914 @@
+<style>
+    /**
+   * prism.js Github theme based on GitHub's theme.
+   * @author Sam Clarke
+   */
+    code[class*="language-"],
+    pre[class*="language-"] {
+      color: #333;
+      background: none;
+      font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+      text-align: left;
+      white-space: pre;
+      word-spacing: normal;
+      word-break: normal;
+      word-wrap: normal;
+      line-height: 1.4;
+  
+      -moz-tab-size: 8;
+      -o-tab-size: 8;
+      tab-size: 8;
+  
+      -webkit-hyphens: none;
+      -moz-hyphens: none;
+      -ms-hyphens: none;
+      hyphens: none;
+    }
+  
+    /* Code blocks */
+    pre[class*="language-"] {
+      padding: .8em;
+      overflow: auto;
+      /* border: 1px solid #ddd; */
+      border-radius: 3px;
+      /* background: #fff; */
+      background: #f5f5f5;
+    }
+  
+    /* Inline code */
+    :not(pre)>code[class*="language-"] {
+      padding: .1em;
+      border-radius: .3em;
+      white-space: normal;
+      background: #f5f5f5;
+    }
+  
+    .token.comment,
+    .token.blockquote {
+      color: #969896;
+    }
+  
+    .token.cdata {
+      color: #183691;
+    }
+  
+    .token.doctype,
+    .token.punctuation,
+    .token.variable,
+    .token.macro.property {
+      color: #333;
+    }
+  
+    .token.operator,
+    .token.important,
+    .token.keyword,
+    .token.rule,
+    .token.builtin {
+      color: #a71d5d;
+    }
+  
+    .token.string,
+    .token.url,
+    .token.regex,
+    .token.attr-value {
+      color: #183691;
+    }
+  
+    .token.property,
+    .token.number,
+    .token.boolean,
+    .token.entity,
+    .token.atrule,
+    .token.constant,
+    .token.symbol,
+    .token.command,
+    .token.code {
+      color: #0086b3;
+    }
+  
+    .token.tag,
+    .token.selector,
+    .token.prolog {
+      color: #63a35c;
+    }
+  
+    .token.function,
+    .token.namespace,
+    .token.pseudo-element,
+    .token.class,
+    .token.class-name,
+    .token.pseudo-class,
+    .token.id,
+    .token.url-reference .token.variable,
+    .token.attr-name {
+      color: #795da3;
+    }
+  
+    .token.entity {
+      cursor: help;
+    }
+  
+    .token.title,
+    .token.title .token.punctuation {
+      font-weight: bold;
+      color: #1d3e81;
+    }
+  
+    .token.list {
+      color: #ed6a43;
+    }
+  
+    .token.inserted {
+      background-color: #eaffea;
+      color: #55a532;
+    }
+  
+    .token.deleted {
+      background-color: #ffecec;
+      color: #bd2c00;
+    }
+  
+    .token.bold {
+      font-weight: bold;
+    }
+  
+    .token.italic {
+      font-style: italic;
+    }
+  
+  
+    /* JSON */
+    .language-json .token.property {
+      color: #183691;
+    }
+  
+    .language-markup .token.tag .token.punctuation {
+      color: #333;
+    }
+  
+    /* CSS */
+    code.language-css,
+    .language-css .token.function {
+      color: #0086b3;
+    }
+  
+    /* YAML */
+    .language-yaml .token.atrule {
+      color: #63a35c;
+    }
+  
+    code.language-yaml {
+      color: #183691;
+    }
+  
+    /* Ruby */
+    .language-ruby .token.function {
+      color: #333;
+    }
+  
+    /* Markdown */
+    .language-markdown .token.url {
+      color: #795da3;
+    }
+  
+    /* Makefile */
+    .language-makefile .token.symbol {
+      color: #795da3;
+    }
+  
+    .language-makefile .token.variable {
+      color: #183691;
+    }
+  
+    .language-makefile .token.builtin {
+      color: #0086b3;
+    }
+  
+    /* Bash */
+    .language-bash .token.keyword {
+      color: #0086b3;
+    }
+  
+    /* highlight */
+    pre[data-line] {
+      position: relative;
+      padding: 1em 0 1em 3em;
+    }
+  
+    pre[data-line] .line-highlight-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: transparent;
+      display: block;
+      width: 100%;
+    }
+  
+    pre[data-line] .line-highlight {
+      position: absolute;
+      left: 0;
+      right: 0;
+      padding: inherit 0;
+      margin-top: 1em;
+      background: hsla(24, 20%, 50%, .08);
+      background: linear-gradient(to right, hsla(24, 20%, 50%, .1) 70%, hsla(24, 20%, 50%, 0));
+      pointer-events: none;
+      line-height: inherit;
+      white-space: pre;
+    }
+  
+    pre[data-line] .line-highlight:before,
+    pre[data-line] .line-highlight[data-end]:after {
+      content: attr(data-start);
+      position: absolute;
+      top: .4em;
+      left: .6em;
+      min-width: 1em;
+      padding: 0 .5em;
+      background-color: hsla(24, 20%, 50%, .4);
+      color: hsl(24, 20%, 95%);
+      font: bold 65%/1.5 sans-serif;
+      text-align: center;
+      vertical-align: .3em;
+      border-radius: 999px;
+      text-shadow: none;
+      box-shadow: 0 1px white;
+    }
+  
+    pre[data-line] .line-highlight[data-end]:after {
+      content: attr(data-end);
+      top: auto;
+      bottom: .4em;
+    }
+  
+    html body {
+      font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+      background-color: #fff;
+      overflow: initial;
+      box-sizing: border-box;
+      word-wrap: break-word
+    }
+  
+    html body>:first-child {
+      margin-top: 0
+    }
+  
+    html body h1,
+    html body h2,
+    html body h3,
+    html body h4,
+    html body h5,
+    html body h6 {
+      line-height: 1.2;
+      margin-top: 1em;
+      margin-bottom: 16px;
+      color: #000
+    }
+  
+    html body h1 {
+      font-size: 2.25em;
+      font-weight: 300;
+      padding-bottom: .3em
+    }
+  
+    html body h2 {
+      font-size: 1.75em;
+      font-weight: 400;
+      padding-bottom: .3em
+    }
+  
+    html body h3 {
+      font-size: 1.5em;
+      font-weight: 500
+    }
+  
+    html body h4 {
+      font-size: 1.25em;
+      font-weight: 600
+    }
+  
+    html body h5 {
+      font-size: 1.1em;
+      font-weight: 600
+    }
+  
+    html body h6 {
+      font-size: 1em;
+      font-weight: 600
+    }
+  
+    html body h1,
+    html body h2,
+    html body h3,
+    html body h4,
+    html body h5 {
+      font-weight: 600
+    }
+  
+    html body h5 {
+      font-size: 1em
+    }
+  
+    html body h6 {
+      color: #5c5c5c
+    }
+  
+    html body strong {
+      color: #000
+    }
+  
+    html body del {
+      color: #5c5c5c
+    }
+  
+    html body a:not([href]) {
+      color: inherit;
+      text-decoration: none
+    }
+  
+    html body a {
+      color: #08c;
+      text-decoration: none
+    }
+  
+    html body a:hover {
+      color: #00a3f5;
+      text-decoration: none
+    }
+  
+    html body img {
+      max-width: 100%
+    }
+  
+    html body>p {
+      margin-top: 0;
+      margin-bottom: 16px;
+      word-wrap: break-word
+    }
+  
+    html body>ul,
+    html body>ol {
+      margin-bottom: 16px
+    }
+  
+    html body ul,
+    html body ol {
+      padding-left: 2em
+    }
+  
+    html body ul.no-list,
+    html body ol.no-list {
+      padding: 0;
+      list-style-type: none
+    }
+  
+    html body ul ul,
+    html body ul ol,
+    html body ol ol,
+    html body ol ul {
+      margin-top: 0;
+      margin-bottom: 0
+    }
+  
+    html body li {
+      margin-bottom: 0
+    }
+  
+    html body li.task-list-item {
+      list-style: none
+    }
+  
+    html body li>p {
+      margin-top: 0;
+      margin-bottom: 0
+    }
+  
+    html body .task-list-item-checkbox {
+      margin: 0 .2em .25em -1.8em;
+      vertical-align: middle
+    }
+  
+    html body .task-list-item-checkbox:hover {
+      cursor: pointer
+    }
+  
+    html body blockquote {
+      margin: 16px 0;
+      font-size: inherit;
+      padding: 0 15px;
+      color: #5c5c5c;
+      background-color: #f0f0f0;
+      border-left: 4px solid #d6d6d6
+    }
+  
+    html body blockquote>:first-child {
+      margin-top: 0
+    }
+  
+    html body blockquote>:last-child {
+      margin-bottom: 0
+    }
+  
+    html body hr {
+      height: 4px;
+      margin: 32px 0;
+      background-color: #d6d6d6;
+      border: 0 none
+    }
+  
+    html body table {
+      margin: 10px 0 15px 0;
+      border-collapse: collapse;
+      border-spacing: 0;
+      display: block;
+      width: 100%;
+      overflow: auto;
+      word-break: normal;
+      word-break: keep-all
+    }
+  
+    html body table th {
+      font-weight: bold;
+      color: #000
+    }
+  
+    html body table td,
+    html body table th {
+      border: 1px solid #d6d6d6;
+      padding: 6px 13px
+    }
+  
+    html body dl {
+      padding: 0
+    }
+  
+    html body dl dt {
+      padding: 0;
+      margin-top: 16px;
+      font-size: 1em;
+      font-style: italic;
+      font-weight: bold
+    }
+  
+    html body dl dd {
+      padding: 0 16px;
+      margin-bottom: 16px
+    }
+  
+    html body code {
+      font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+      font-size: .85em !important;
+      color: #000;
+      background-color: #f0f0f0;
+      border-radius: 3px;
+      padding: .2em 0
+    }
+  
+    html body code::before,
+    html body code::after {
+      letter-spacing: -0.2em;
+      content: "\00a0"
+    }
+  
+    html body pre>code {
+      padding: 0;
+      margin: 0;
+      font-size: .85em !important;
+      word-break: normal;
+      white-space: pre;
+      background: transparent;
+      border: 0
+    }
+  
+    html body .highlight {
+      margin-bottom: 16px
+    }
+  
+    html body .highlight pre,
+    html body pre {
+      padding: 1em;
+      overflow: auto;
+      font-size: .85em !important;
+      line-height: 1.45;
+      border: #d6d6d6;
+      border-radius: 3px
+    }
+  
+    html body .highlight pre {
+      margin-bottom: 0;
+      word-break: normal
+    }
+  
+    html body pre code,
+    html body pre tt {
+      display: inline;
+      max-width: initial;
+      padding: 0;
+      margin: 0;
+      overflow: initial;
+      line-height: inherit;
+      word-wrap: normal;
+      background-color: transparent;
+      border: 0
+    }
+  
+    html body pre code:before,
+    html body pre tt:before,
+    html body pre code:after,
+    html body pre tt:after {
+      content: normal
+    }
+  
+    html body p,
+    html body blockquote,
+    html body ul,
+    html body ol,
+    html body dl,
+    html body pre {
+      margin-top: 0;
+      margin-bottom: 16px
+    }
+  
+    html body kbd {
+      color: #000;
+      border: 1px solid #d6d6d6;
+      border-bottom: 2px solid #c7c7c7;
+      padding: 2px 4px;
+      background-color: #f0f0f0;
+      border-radius: 3px
+    }
+  
+    @media print {
+      html body {
+        background-color: #fff
+      }
+  
+      html body h1,
+      html body h2,
+      html body h3,
+      html body h4,
+      html body h5,
+      html body h6 {
+        color: #000;
+        page-break-after: avoid
+      }
+  
+      html body blockquote {
+        color: #5c5c5c
+      }
+  
+      html body pre {
+        page-break-inside: avoid
+      }
+  
+      html body table {
+        display: table
+      }
+  
+      html body img {
+        display: block;
+        max-width: 100%;
+        max-height: 100%
+      }
+  
+      html body pre,
+      html body code {
+        word-wrap: break-word;
+        white-space: pre
+      }
+    }
+  
+    .markdown-preview {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box
+    }
+  
+    .markdown-preview .pagebreak,
+    .markdown-preview .newpage {
+      page-break-before: always
+    }
+  
+    .markdown-preview pre.line-numbers {
+      position: relative;
+      padding-left: 3.8em;
+      counter-reset: linenumber
+    }
+  
+    .markdown-preview pre.line-numbers>code {
+      position: relative
+    }
+  
+    .markdown-preview pre.line-numbers .line-numbers-rows {
+      position: absolute;
+      pointer-events: none;
+      top: 1em;
+      font-size: 100%;
+      left: 0;
+      width: 3em;
+      letter-spacing: -1px;
+      border-right: 1px solid #999;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none
+    }
+  
+    .markdown-preview pre.line-numbers .line-numbers-rows>span {
+      pointer-events: none;
+      display: block;
+      counter-increment: linenumber
+    }
+  
+    .markdown-preview pre.line-numbers .line-numbers-rows>span:before {
+      content: counter(linenumber);
+      color: #999;
+      display: block;
+      padding-right: .8em;
+      text-align: right
+    }
+  
+    .markdown-preview .mathjax-exps .MathJax_Display {
+      text-align: center !important
+    }
+  
+    .markdown-preview:not([for="preview"]) .code-chunk .btn-group {
+      display: none
+    }
+  
+    .markdown-preview:not([for="preview"]) .code-chunk .status {
+      display: none
+    }
+  
+    .markdown-preview:not([for="preview"]) .code-chunk .output-div {
+      margin-bottom: 16px
+    }
+  
+    .markdown-preview .md-toc {
+      padding: 0
+    }
+  
+    .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link {
+      display: inline;
+      padding: .25rem 0
+    }
+  
+    .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p,
+    .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div {
+      display: inline
+    }
+  
+    .markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link {
+      font-weight: 800
+    }
+  
+    .scrollbar-style::-webkit-scrollbar {
+      width: 8px
+    }
+  
+    .scrollbar-style::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background-color: transparent
+    }
+  
+    .scrollbar-style::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      background-color: rgba(150, 150, 150, 0.66);
+      border: 4px solid rgba(150, 150, 150, 0.66);
+      background-clip: content-box
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode]) {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      margin: 0;
+      padding: 0;
+      overflow: auto
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview {
+      position: relative;
+      top: 0
+    }
+  
+    @media screen and (min-width:914px) {
+      html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview {
+        padding: 2em calc(50% - 457px + 2em)
+      }
+    }
+  
+    @media screen and (max-width:914px) {
+      html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview {
+        padding: 2em
+      }
+    }
+  
+    @media screen and (max-width:450px) {
+      html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview {
+        font-size: 14px !important;
+        padding: 1em
+      }
+    }
+  
+    @media print {
+      html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn {
+        display: none
+      }
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn {
+      position: fixed;
+      bottom: 8px;
+      left: 8px;
+      font-size: 28px;
+      cursor: pointer;
+      color: inherit;
+      z-index: 99;
+      width: 32px;
+      text-align: center;
+      opacity: .4
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn {
+      opacity: 1
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 300px;
+      height: 100%;
+      padding: 32px 0 48px 0;
+      font-size: 14px;
+      box-shadow: 0 0 4px rgba(150, 150, 150, 0.33);
+      box-sizing: border-box;
+      overflow: auto;
+      background-color: inherit
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar {
+      width: 8px
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background-color: transparent
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      background-color: rgba(150, 150, 150, 0.66);
+      border: 4px solid rgba(150, 150, 150, 0.66);
+      background-clip: content-box
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a {
+      text-decoration: none
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc {
+      padding: 0 16px
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link {
+      display: inline;
+      padding: .25rem 0
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p,
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div {
+      display: inline
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link {
+      font-weight: 800
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview {
+      left: 300px;
+      width: calc(100% - 300px);
+      padding: 2em calc(50% - 457px - 300px/2);
+      margin: 0;
+      box-sizing: border-box
+    }
+  
+    @media screen and (max-width:1274px) {
+      html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview {
+        padding: 2em
+      }
+    }
+  
+    @media screen and (max-width:450px) {
+      html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview {
+        width: 100%
+      }
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview {
+      left: 50%;
+      transform: translateX(-50%)
+    }
+  
+    html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc {
+      display: none
+    }
+  
+    /* Please visit the URL below for more information: */
+    /*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+  </style>
+  
+  
+  <div class="mume markdown-preview  ">
+    <p align="center"><img width="320" data-width="320" data-height="320" class="lazy" data-original="https://cdn.max-c.com/wiki/671860/EAC Fix.png?v=1" src="https://cdn.max-c.com/wiki/671860/EAC Fix.png?v=1"></p>
+    <h4 class="img-desc">请输入图片描述</h4>
+    <p></p>
+    <h1 align="center">
+      BattleBit EAC Fix</h1>
+    <a href="https://livingflore.me/eacfix" target="-blank" title="Download">
+      <img data-width="151" data-height="35" class="lazy" data-original="https://cdn.max-c.com/wiki/671860/Download.png?v=1" src="https://cdn.max-c.com/wiki/671860/Download.png?v=1">
+      <h4 class="img-desc">点击下载</h4>
+      <h4>此批处理脚本完全重新安装 EAC，并安装 VCRedist x86-64 2015-2022 以解决此问题和其他问题。
+      </h4>
+      <h2 align="center">
+        Further Troubleshooting</h2>
+    </a>
+    <h3 class="mume-header" id="httpsiimgurcomtkgfam6png-%E7%A1%AE%E4%BF%9D%E6%82%A8%E5%B7%B2%E5%AE%89%E8%A3%85-%E6%98%93%E5%8F%8D%E4%BD%9C%E5%BC%8A-%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AE%83%E8%BF%90%E8%A1%8C%E6%B8%B8%E6%88%8F"><a href="https://livingflore.me/eacfix" target="-blank" title="Download"></a><a href="https://i.imgur.com/tKGFam6.png">•</a> 确保您已安装 易反作弊 并使用它运行游戏。</h3>
+  
+    <ol>
+      <li>运行批处理（上面的下载按钮）。</li>
+      <li>确保<strong>两个</strong> VCRedists都安装正确 - <a href="https://aka.ms/vs/17/release/vc_redist.x86.exe">x86</a> and <a href="https://aka.ms/vs/17/release/vc_redist.x64.exe">x64</a>.<br>
+        运行安装程序时，您应该能看到 3 个选项：修复、卸载和取消。如果看不到它选择：<strong>继续安装</strong>。</li>
+      <li>尝试从位于已安装文件中的管理员运行BattlebitEAC.exe或EasyAntiCheat.exe（<strong>右键单击游戏&gt;属性&gt;已安装的文件&gt;浏览</strong>）</li>
+      <li>您可能会遇到一些连接问题，因此 EAC 无法访问其服务器。尝试使用<a href="https://1.1.1.1">Cloudflare WARP</a>或任何代理。</li>
+    </ol>
+    <h3 class="mume-header" id="httpsiimgurcomadtylmmpng-%E5%90%AF%E5%8A%A8%E9%94%99%E8%AF%AF---%E6%9C%AA%E5%AE%89%E8%A3%85eac%E5%8F%8D%E4%BD%9C%E5%BC%8A"><a href="https://i.imgur.com/ADtyLmM.png">•</a> 启动错误 - 未安装EAC反作弊。</h3>
+  
+    <p>运行<a href="https://i.imgur.com/466AXn8.png">"Install &amp; Repair Easy Anti Cheat"</a>启动选项。</p>
+    <p>如果无法访问启动选项，请<a href="https://i.imgur.com/16aeGuw.png">右键单击游戏&gt;“属性”&gt;“启动选项”&gt;“启动游戏时询问”</a></p>
+    <h3 class="mume-header" id="httpsiimgurcomyzxejzhpng-%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B1%E8%B4%A5%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%8132"><a href="https://i.imgur.com/yzxejzh.png">•</a> 创建文件失败，错误代码32。</h3>
+  
+    <ol>
+      <li>重新启动您的电脑。</li>
+      <li>删除位于 <code>EasyAntiCheat_EOS.sys</code> 中的文件。<code>C:\Program Files (x86)\EasyAntiCheat_EOS</code>.</li>
+      <li>运行bat文件（上面的下载按钮）。</li>
+    </ol>
+    <h3 class="mume-header" id="httpsiimgurcomtdrxblbpng-%E4%B8%8D%E5%8F%97%E4%BF%A1%E4%BB%BB%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6"><a href="https://i.imgur.com/tDRxBLb.png">•</a> 不受信任的系统文件</h3>
+  
+    <p>根据导致此问题的驱动程序，您可能需要<a href="https://support.nzxt.com/hc/en-us/articles/4403882406555-Reinstalling-Graphic-Drivers">重新安装</a>/更新 GPU 驱动程序</p>
+    <p>更新 GPU 驱动程序或以管理员身份运行并在命令提示符下（按 Win+R，键入 ，然后按 Ctrl+Shift+Enter）。</p>
+    <h3 class="mume-header" id="httpsiimgurcombuvpgidjpg-%E6%A3%80%E6%B5%8B%E5%88%B0%E6%B8%B8%E6%88%8F%E8%BF%9D%E8%A7%84"><a href="https://i.imgur.com/buVpgid.jpg">•</a> 检测到游戏违规</h3>
+  
+    <p>如果看到错误代码#0000000D请删除干扰 EAC 的进程（方括号中的名称）。<br>
+      对于任何其他错误代码，修复是通用的：</p>
+    <ol start="0">
+      <li>检查您的任务管理器并摆脱您认为会干扰EAC的任何软件（RGB、托盘最小化器、调整等）。</li>
+      <li>如果使用第三方防病毒软件 - 请确保将EAC添加到排除项。如果它没有帮助 - 关闭这个防病毒软件。</li>
+      <li>运行bat文件（上面的下载按钮）。</li>
+      <li>尝试以管理员身份运行BattlebitEAC.exe或EasyAntiCheat.exe（右键单击可执行文件&gt;以管理员身份运行）位于已安装文件中（右键单击游戏&gt;属性&gt;已安装的文件&gt;浏览）。</li>
+      <li>验证游戏文件。</li>
+      <li>启用<a href="https://support.microsoft.com/en-us/topic/what-is-data-execution-prevention-dep-60dabc2b-90db-45fc-9b18-512419135817">数据执行保护</a>.</li>
+      <li>按 Win+R，键入<strong>sigverif</strong>并按回车键。继续进行驱动程序签名验证。完成后，系统将提示您未签名的驱动程序列表或消息，说明一切正常。在第一种情况下，根据未签名的驱动程序，您可能需要<a href="https://support.nzxt.com/hc/en-us/articles/4403882406555-Reinstalling-Graphic-Drivers">重新安装</a>/更新 GPU 驱动程序<br>
+        或以管理员身份运行并在命令提示符下（按 Win+R，键入，然后按 Ctrl+Shift+Enter）。</li>
+    </ol>
+    <h3 class="mume-header" id="httpsiimgurcommepc8z1png-%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%E5%A4%B1%E8%B4%A5easyanticheat_eossys%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%815"><a href="https://i.imgur.com/mePC8z1.png">•</a> 启动服务失败EasyAntiCheat_EOSSys，错误代码5。</h3>
+  
+    <ol>
+      <li>运行bat文件（上面的下载按钮）。</li>
+      <li>按 Win+R，键入<strong>regedit.exe</strong>，然后转到<strong>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EasyAntiCheat_EOS</strong>，右键单击<strong>EasyAntiCheat_EOS</strong>，并授予对所有应用程序包的完全访问权限。</li>
+    </ol>
+    <h3 class="mume-header" id="httpsiimgurcomrr0rdnbpng-%E4%BD%A0%E8%A2%AB%E5%8F%8D%E4%BD%9C%E5%BC%8A%E8%B8%A2%E4%BA%86%E7%A1%AE%E4%BF%9D"><a href="https://i.imgur.com/rR0rDnB.png">•</a> 你被反作弊踢了。确保...</h3>
+  
+    <ol start="0">
+      <li>如果您使用自定义 lang 文件 - 删除它，你没有被封禁。</li>
+      <li>确保您没有 EAC 条目 <code>/etc/hosts</code> (例如，《星际公民》需要这样做)。</li>
+      <li>运行bat文件（上面的下载按钮）。</li>
+      <li>确保<strong>绝对没有任何东西</strong> 阻止 EAC 连接（杀毒软件 / 防火墙 / ISP）。</li>
+      <li>删除 <code>Certificates</code> 它位于 <a href="https://i.imgur.com/t8Pocyo.png">已安装文件</a> &gt; <code>EasyAntiCheat</code> 并且<br>
+        <a href="https://cdn.discordapp.com/attachments/1109901924314140732/1124030888276132000/BBR_Validation.gif">验证游戏完整性</a>.
+      </li>
+      <li>通过重新启动调制解调器/路由器或使加速器/<a href="https://1.1.1.1">Cloudflare WARP</a>.来改变你的IP。</li>
+      <li>如果以上任何内容都无济于事 - 对不起，您只能靠自己。</li>
+    </ol>
+    <h3 class="mume-header" id="httpsiimgurcomn8zyr47jpg-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E5%90%AF%E5%8A%A80xc0000005"><a href="https://i.imgur.com/N8Zyr47.jpg">•</a> 应用程序无法正确启动（0xc0000005)</h3>
+  
+    <p>此错误代码表示访问冲突 =&gt; 可以是任何东西。</p>
+    <ol>
+      <li>此错误代码表示访问冲突 =&gt; 可以是任何东西。</li>
+      <li>尝试以管理员身份运行BattlebitEAC.exe或EasyAntiCheat.exe(<a href="https://i.imgur.com/l4kF2o3.png">右键可执行文件&gt;以管理员身份运行</a>)位于路径下的该文件。(<a href="https://i.imgur.com/16aeGuw.png">右键游戏&gt;属性</a> <a href="https://i.imgur.com/t8Pocyo.png">&gt;已安装文件&gt;浏览</a>).</li>
+      <li>按下Win+R键入<code>cmd</code>, 然后按下Ctrl+Shift+Enter并运行<code>sfc /scannow</code> (可能会花上一段时间) 和 <code>dism /online /cleanup-image /restorehealth</code>.</li>
+      <li>禁用超频软件（如果有）。</li>
+      <li><a href="https://cdn.discordapp.com/attachments/1109901924314140732/1124030888276132000/BBR_Validation.gif">验证游戏文件完整性</a>.</li>
+      <li>在其他驱动器/分区上重新安装游戏。</li>
+    </ol>
+    <h3 class="mume-header" id="-%E6%88%91%E5%9C%A8%E4%B8%8A%E9%9D%A2%E6%89%BE%E4%B8%8D%E5%88%B0%E6%88%91%E7%9A%84%E9%97%AE%E9%A2%98">• 我在上面找不到我的问题...</h3>
+  
+    <p>请联系BattleBit不同社区服务器中的<a href="https://discord.com/channels/303681520202285057/1023557300214050968">#anti-cheat-help(DC社区)</a>（上面的按钮）尋寻求帮助。</p>
+  
+  </div>
